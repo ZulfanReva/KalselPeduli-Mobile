@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('foto')->nullable();
             $table->text('catatan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

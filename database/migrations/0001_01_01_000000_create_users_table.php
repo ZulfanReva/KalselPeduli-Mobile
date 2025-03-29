@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('nama');
             $table->string('avatar')->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 

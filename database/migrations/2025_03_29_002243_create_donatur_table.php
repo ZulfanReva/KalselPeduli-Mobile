@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('donatur', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
+            $table->string('nomor_whatsapp');
             $table->foreignId('proyek_penggalangan_id')->constrained('proyek_penggalangan')->onDelete('cascade');
-            $table->integer('jumlah_donasi');
+            $table->unsignedBigInteger('jumlah_donasi');
             $table->text('catatan')->nullable();
             $table->boolean('sudah_dibayar')->default(false);
             $table->string('bukti_pembayaran')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

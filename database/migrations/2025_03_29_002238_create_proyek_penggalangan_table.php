@@ -21,8 +21,9 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('foto')->nullable();
             $table->text('deskripsi')->nullable();
-            $table->integer('target_donasi');
+            $table->unsignedBigInteger('target_donasi');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

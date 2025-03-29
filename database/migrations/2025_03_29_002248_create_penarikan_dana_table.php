@@ -17,13 +17,14 @@ return new class extends Migration
             $table->foreignId('pemohon_penggalangan_id')->constrained('pemohon_penggalangan')->onDelete('cascade');
             $table->boolean('sudah_diterima')->default(false);
             $table->boolean('sudah_disetujui')->default(false);
-            $table->integer('jumlah_diminta');
-            $table->integer('jumlah_diterima')->nullable();
+            $table->unsignedBigInteger('jumlah_diminta');
+            $table->unsignedBigInteger('jumlah_diterima')->nullable();
             $table->string('nama_bank');
             $table->string('nama_rekening');
             $table->string('nomor_rekening');
             $table->string('bukti_penarikan')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
