@@ -23,6 +23,11 @@ class ProyekPenggalanganController extends Controller
         //
     }
 
+    public function status_aktif()
+    {
+
+    }
+
     /**
      * Store a newly created resource in storage.
      */
