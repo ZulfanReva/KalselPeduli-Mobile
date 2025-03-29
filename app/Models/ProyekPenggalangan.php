@@ -35,7 +35,12 @@ class ProyekPenggalangan extends Model
 
     public function donatur()
     {
-        return $this->hasMany(Donatur::class);
+        return $this->hasMany(Donatur::class)->where('sudah_dibayar', 1);
+    }
+    // Untuk menghitung dana yang sudah terkumpul dari jumlah donasi donatur yang di terima
+    public function TotalDonasiTerkumpul()
+    {
+        return $this->donatur()->sum('jumlah_donasi');
     }
 
     public function penarikanDana()
