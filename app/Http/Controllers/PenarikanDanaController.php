@@ -13,6 +13,7 @@ class PenarikanDanaController extends Controller
     public function index()
     {
         //
+        return view('admin.penarikan_dana.index');
     }
 
     /**

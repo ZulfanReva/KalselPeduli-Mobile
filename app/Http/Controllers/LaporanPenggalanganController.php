@@ -12,7 +12,7 @@ class LaporanPenggalanganController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.laporan_penggalangan.index');
     }
 
     /**

@@ -30,11 +30,11 @@ Route::middleware('auth')->group(function () {
         Route::resource('donatur', DonaturController::class)
             ->middleware('role:owner');
 
-        Route::resource('pemohon_pelanggan', PemohonPenggalanganController::class)
+        Route::resource('pemohon_penggalangan', PemohonPenggalanganController::class)
             ->middleware('role:owner')->except('index');
 
-        Route::get('pemohon_pelanggan', [PemohonPenggalanganController::class, 'index'])
-            ->name('pemohon_pelanggan.index');
+        Route::get('pemohon_penggalangan', [PemohonPenggalanganController::class, 'index'])
+            ->name('pemohon_penggalangan.index');
 
         Route::resource('penarikan_dana', PenarikanDanaController::class)
             ->middleware('role:owner|pemohon_penggalangan');
@@ -46,25 +46,19 @@ Route::middleware('auth')->group(function () {
         Route::resource('laporan_penggalangan', LaporanPenggalanganController::class)
             ->middleware('role:owner|pemohon_penggalangan');
 
-        Route::post('/laporan_penggalangan/update/{fundraising}', [LaporanPenggalanganController::class, 'store'])
+        Route::post('/laporan_penggalangan/update/{proyek_penggalangan}', [LaporanPenggalanganController::class, 'store'])
             ->middleware('role:pemohon_penggalangan')
             ->name('laporan_penggalangan.store');
 
         Route::resource('proyek_penggalangan', ProyekPenggalanganController::class)
             ->middleware('role:owner|pemohon_penggalangan');
 
-        Route::post('/proyek_penggalangan/active/{fundraising}', [ProyekPenggalanganController::class, 'activate_fundraising'])
+        Route::post('/proyek_penggalangan/active/{proyek_penggalangan}', [ProyekPenggalanganController::class, 'status_aktif'])
             ->middleware('role:owner')
-            ->name('fundraising_withdrawals.activate_fundraising');
+            ->name('proyek_penggalangan.status_aktif'); // Diperbaiki
 
         Route::post('/pemohon_penggalangan/apply', [DashboardController::class, 'apply_pemohon_penggalangan'])
             ->name('pemohon_penggalangan.apply');
-
-        Route::get('/laporan_penggalangan', [DashboardController::class, 'laporan_penggalangan'])
-            ->name('laporan_penggalangan');
-
-        Route::get('/laporan_penggalangan/details/{fundraisingWithdrawal}', [DashboardController::class, 'laporan_penggalangan.details'])
-            ->name('laporan_penggalangan.details');
     });
 });
 

@@ -12,7 +12,7 @@ class PemohonPenggalanganController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.pemohon_penggalangan.index');
     }
 
     /**

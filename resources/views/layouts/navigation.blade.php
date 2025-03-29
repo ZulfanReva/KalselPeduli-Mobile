@@ -16,9 +16,35 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('admin.kategori.index')" :active="request()->routeIs('admin.kategori.index')">
-                        {{ __('Kelola Kategori') }}
+                    @role('owner')
+                        <x-nav-link :href="route('admin.kategori.index')" :active="request()->routeIs('admin.kategori.index')">
+                            {{ __('Kategori') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.donatur.index')" :active="request()->routeIs('admin.donatur.index')">
+                            {{ __('Donatur') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.penarikan_dana.index')" :active="request()->routeIs('admin.penarikan_dana.index')">
+                            {{ __('Penarikan Dana') }}
+                        </x-nav-link>
+                    @endrole
+
+                    <x-nav-link :href="route('admin.pemohon_penggalangan.index')" :active="request()->routeIs('admin.pemohon_penggalangan.index')">
+                        {{ __('Pemohon Penggalangan') }}
                     </x-nav-link>
+
+                    @role('owner|pemohon_penggalangan')
+                        <x-nav-link :href="route('admin.proyek_penggalangan.index')" :active="request()->routeIs('admin.proyek_penggalangan.index')">
+                            {{ __('Proyek Penggalangan') }}
+                        </x-nav-link>
+                    @endrole
+
+                    @role('pemohon_penggalangan')
+                        <x-nav-link :href="route('admin.laporan_penggalangan.index')" :active="request()->routeIs('admin.laporan_penggalangan.index')">
+                            {{ __('Laporan Penggalangan') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

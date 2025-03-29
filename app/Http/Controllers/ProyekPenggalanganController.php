@@ -13,6 +13,7 @@ class ProyekPenggalanganController extends Controller
     public function index()
     {
         //
+        return view('admin.proyek_penggalangan.index');
     }
 
     /**
