@@ -5,7 +5,7 @@
                 {{ __('Manage Categories') }}
             </h2>
             <a href="#" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
-                Add New
+                Tambah Data
             </a>
         </div>
     </x-slot>
@@ -14,7 +14,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
 
-                @forelse ($kategori as $item)
+                @forelse ($item as $kategori)
                     <div class="item-card flex flex-row justify-between items-center">
                         <div class="flex flex-row items-center gap-x-3">
                             <img src="{{Storage::url($item->ikon) ?? 'https://cdn4.iconfinder.com/data/icons/picture-sharing-sites/32/No_Image-512.png' }}"

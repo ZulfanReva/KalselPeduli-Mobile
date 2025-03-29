@@ -10,6 +10,8 @@ class PenarikanDana extends Model
 {
     use HasFactory, SoftDeletes;
     
+    protected $table = 'penarikan_dana';
+
     protected $fillable = [
         'proyek_penggalangan_id',
         'pemohon_penggalangan_id',

@@ -10,6 +10,8 @@ class PemohonPenggalangan extends Model
 {
     use HasFactory, SoftDeletes;
     
+    protected $table = 'pemohon_penggalangan';
+
     protected $fillable = [
         'user_id',
         'status_aktif',

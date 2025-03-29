@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Donatur extends Model
 {
+    protected $table = 'donatur';
+
     protected $fillable = [
         'nama',
         'proyek_penggalangan_id',
