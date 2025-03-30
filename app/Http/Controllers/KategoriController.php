@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreKategoriRequest;
+use App\Http\Requests\UpdateKategoriRequest;
 
 class KategoriController extends Controller
 {
@@ -71,9 +72,22 @@ class KategoriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kategori $kategori)
+    public function update(UpdateKategoriRequest $request, Kategori $kategori)
     {
-        //
+        DB::transaction(function () use ($request, $kategori) {
+            $validated = $request->validated();
+
+            if ($request->hasFile('ikon')) {
+                $ikonPath = $request->file('ikon')->store('ikons', 'public');
+                $validated['ikon'] = $ikonPath; // Contoh path: /storage/ikons/filename.png
+            }
+
+            $validated['slug'] = Str::slug($validated['nama']); // Contoh slug: bencana-alam
+
+            $kategori->update($validated);
+        });
+
+        return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil diperbarui.');
     }
 
     /**
