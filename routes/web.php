@@ -36,6 +36,9 @@ Route::middleware('auth')->group(function () {
         Route::get('pemohon_penggalangan', [PemohonPenggalanganController::class, 'index'])
             ->name('pemohon_penggalangan.index');
 
+        Route::post('pemohon_penggalangan/daftar', [PemohonPenggalanganController::class, 'daftar'])
+            ->name('pemohon_penggalangan.daftar');
+
         Route::resource('penarikan_dana', PenarikanDanaController::class)
             ->middleware('role:owner|pemohon_penggalangan');
 
@@ -57,8 +60,7 @@ Route::middleware('auth')->group(function () {
             ->middleware('role:owner')
             ->name('proyek_penggalangan.status_aktif'); // Diperbaiki
 
-        Route::post('/pemohon_penggalangan/apply', [DashboardController::class, 'apply_pemohon_penggalangan'])
-            ->name('pemohon_penggalangan.apply');
+
     });
 });
 
