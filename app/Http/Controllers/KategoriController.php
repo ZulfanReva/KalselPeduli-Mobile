@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Kategori;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StoreKategoriRequest;
 
 class KategoriController extends Controller
 {
@@ -12,8 +15,8 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        $item = Kategori::all();
-        return view('admin.kategori.index', compact('item'));
+        $kategori = Kategori::all(); // atau bisa pakai paginate()
+        return view('admin.kategori.index', ['item' => $kategori]);
     }
 
     /**
@@ -28,9 +31,24 @@ class KategoriController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreKategoriRequest $request)
     {
-        //
+        DB::transaction(function () use ($request) {
+            $validated = $request->validated();
+
+            if ($request->hasFile('ikon')) {
+                $ikonPath = $request->file('ikon')->store('ikons', 'public');
+                $validated['ikon'] = $ikonPath; // Contoh path: /storage/ikons/filename.png
+            } else {
+                $ikonPath = 'images/ikon-category-default.png';
+            }
+
+            $validated['slug'] = Str::slug($validated['nama']); // Contoh slug: bencana-alam
+
+            $kategori = Kategori::create($validated);
+        });
+
+        return redirect()->route('admin.kategori.index');
     }
 
     /**
@@ -63,6 +81,15 @@ class KategoriController extends Controller
      */
     public function destroy(Kategori $kategori)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $kategori->delete();
+            DB::commit();
+            return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('admin.kategori.index')->with('error', 'Terjadi kesalahan, kategori gagal dihapus.');
+        }
     }
 }

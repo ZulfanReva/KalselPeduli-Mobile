@@ -8,6 +8,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('images/testing-icon.svg') }}">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -19,13 +21,12 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
-<body
-    @if (request()->routeIs('dashboard')) x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' }"
-        :class="{ 'dark': darkMode }"
-        x-init="$watch('darkMode', value => localStorage.setItem('darkMode', value))"
-    @else
-        x-data="{ darkMode: localStorage.getItem('darkMode') ?? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'true' : 'false') }"
-        :class="{ 'dark': darkMode === 'true' }" @endif
+<body x-data="{
+    darkMode: localStorage.getItem('darkMode') ??
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'true' : 'false')
+}" :class="{ 'dark': darkMode === 'true' }" x-init="$watch('darkMode', value => {
+    localStorage.setItem('darkMode', value);
+})"
     class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
 
 
