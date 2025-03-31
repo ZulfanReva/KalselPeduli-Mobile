@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProyekPenggalanganRequest;
+use App\Http\Requests\UpdateProyekPenggalanganRequest;
 use App\Models\Kategori;
 use App\Models\PemohonPenggalangan;
 use Illuminate\Support\Str;
@@ -89,14 +90,16 @@ class ProyekPenggalanganController extends Controller
     public function show(ProyekPenggalangan $proyekPenggalangan)
     {
 
-        $TotalDonasi = $proyekPenggalangan->TotalDonasiTerkumpul(); 
+        $TotalDonasi = $proyekPenggalangan->TotalDonasiTerkumpul();
         $target_donasi = $TotalDonasi >= $proyekPenggalangan->target_donasi;
 
         $persentase = ($TotalDonasi / $proyekPenggalangan->target_donasi) * 100;
-        if ($persentase > 100) {$persentase = 100;}
+        if ($persentase > 100) {
+            $persentase = 100;
+        }
 
         // Menggunakan $proyekPenggalangan yang sudah otomatis di-binding dengan route model
-        return view('admin.proyek_penggalangan.show', compact('proyekPenggalangan', 'target_donasi', 'persentase' ));
+        return view('admin.proyek_penggalangan.show', compact('proyekPenggalangan', 'target_donasi', 'persentase'));
     }
 
     /**
@@ -104,15 +107,35 @@ class ProyekPenggalanganController extends Controller
      */
     public function edit(ProyekPenggalangan $proyekPenggalangan)
     {
-        //
+        $kategori = Kategori::all();
+        return view('admin.proyek_penggalangan.edit', compact('proyekPenggalangan', 'kategori'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProyekPenggalangan $proyekPenggalangan)
+    public function update(UpdateProyekPenggalanganRequest $request, ProyekPenggalangan $proyekPenggalangan)
     {
-        //
+        DB::transaction(function () use ($request, $proyekPenggalangan) {
+            $validated = $request->validated();
+
+            // Penanganan file foto sesuai permintaan
+            if ($request->hasFile('foto')) {
+                $fotoPath = $request->file('foto')->store('fotos', 'public');
+                $validated['foto'] = $fotoPath;
+            }
+
+            // Buat slug dari nama
+            $validated['slug'] = Str::slug($validated['nama']);
+
+            // Update data proyek
+            $proyekPenggalangan->update($validated);
+        });
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.proyek_penggalangan.show', $proyekPenggalangan)
+            ->with('success', 'Proyek penggalangan berhasil diperbarui.');
     }
 
     /**
@@ -120,6 +143,15 @@ class ProyekPenggalanganController extends Controller
      */
     public function destroy(ProyekPenggalangan $proyekPenggalangan)
     {
-        //
+        DB::beginTransaction();
+
+        try {
+            $proyekPenggalangan->delete();
+            DB::commit();
+            return redirect()->route('admin.proyek_penggalangan.index')->with('success', 'Proyek berhasil dihapus.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('admin.proyek_penggalangan.index')->with('error', 'Terjadi kesalahan, Proyek gagal dihapus.');
+        }
     }
 }
