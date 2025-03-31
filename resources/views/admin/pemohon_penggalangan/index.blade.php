@@ -11,62 +11,71 @@
         <div class="daftar-penggalangan py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
-                    @foreach ($pemohonPenggalangans as $pemohon)
-                        <div class="kartu-item flex flex-row justify-between items-center">
-                            <div class="flex flex-row items-center gap-x-3">
-                                <img src="{{ Storage::url($pemohon->user->avatar) }}" alt="Foto Pemohon"
-                                    class="rounded-2xl object-cover w-[90px] h-[90px]">
-                                <div class="flex flex-col">
+                    @if ($pemohonPenggalangans->isEmpty())
+                        <div class="text-center py-10">
+                            <p class="text-slate-500 dark:text-gray-400 text-lg font-semibold">
+                                Saat ini tidak ada pemohon penggalangan
+                            </p>
+                        </div>
+                    @else
+                        @foreach ($pemohonPenggalangans as $pemohon)
+                            <div class="kartu-item flex flex-row justify-between items-center">
+                                <div class="flex flex-row items-center gap-x-3">
+                                    <img src="{{ Storage::url($pemohon->user->avatar) }}" alt="Foto Pemohon"
+                                        class="rounded-2xl object-cover w-[90px] h-[90px]">
+                                    <div class="flex flex-col">
+                                        <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
+                                            {{ $pemohon->user->nama }}
+                                        </h3>
+                                    </div>
+                                </div>
+
+                                <div class="hidden md:flex flex-col">
+                                    <p class="text-slate-500 dark:text-gray-400 text-sm">Tanggal Pengajuan</p>
                                     <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
-                                        {{ $pemohon->user->nama }}
+                                        {{ \Carbon\Carbon::parse($pemohon->created_at)->setTimezone('Asia/Jakarta')->format('d M Y') }}
                                     </h3>
                                 </div>
-                            </div>
 
-                            <div class="hidden md:flex flex-col">
-                                <p class="text-slate-500 dark:text-gray-400 text-sm">Tanggal Pengajuan</p>
-                                <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
-                                    {{ \Carbon\Carbon::parse($pemohon->created_at)->setTimezone('Asia/Jakarta')->format('d M Y') }}
-                                </h3>
-                            </div>
+                                {{-- Status --}}
+                                <div class="flex flex-col items-center">
+                                    <span
+                                        class="w-fit text-sm font-bold py-2 px-3 rounded-full text-white 
+                                    {{ $pemohon->status_aktif ? 'bg-green-500' : 'bg-orange-500' }}">
+                                        {{ $pemohon->status_aktif ? 'Aktif' : 'Menunggu' }}
+                                    </span>
+                                </div>
 
-                            {{-- Status --}}
-                            <div class="flex flex-col items-center">
-                                <span
-                                    class="w-fit text-sm font-bold py-2 px-3 rounded-full text-white 
-                                {{ $pemohon->status_aktif ? 'bg-green-500' : 'bg-orange-500' }}">
-                                    {{ $pemohon->status_aktif ? 'Aktif' : 'Menunggu' }}
-                                </span>
+                                {{-- Aksi --}}
+                                <div class="flex flex-col items-center">
+                                    @if ($pemohon->status_aktif)
+                                        <div class="hidden md:flex flex-row items-center gap-x-3">
+                                            <form action="#" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="font-bold py-4 px-6 bg-red-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @else
+                                        <div class="hidden md:flex flex-row items-center gap-x-3">
+                                            <form action="{{ route('admin.pemohon_penggalangan.update', $pemohon) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit"
+                                                    class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
+                                                    Terima
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
-
-                            {{-- Aksi --}}
-                            <div class="flex flex-col items-center">
-                                @if ($pemohon->status_aktif)
-                                    <div class="hidden md:flex flex-row items-center gap-x-3">
-                                        <form action="#" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="font-bold py-4 px-6 bg-red-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
-                                                Hapus
-                                            </button>
-                                        </form>
-                                    </div>
-                                @else
-                                    <div class="hidden md:flex flex-row items-center gap-x-3">
-                                        <form action="{{ route ('admin.pemohon_penggalangan.update', $pemohon) }}" method="POST">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit"
-                                                class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
-                                                Terima
-                                            </button>
-                                        </form>
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
@@ -95,11 +104,13 @@
 
                         <!-- Menampilkan pesan sukses atau error jika ada -->
                         @if (session('success'))
-                            <div class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
+                            <div id="success-message"
+                                class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white transition-opacity duration-1000">
                                 {{ session('success') }}
                             </div>
                         @elseif (session('error'))
-                            <div class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-red-500 text-white">
+                            <div id="error-message"
+                                class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-red-500 text-white transition-opacity duration-1000">
                                 {{ session('error') }}
                             </div>
                         @endif
@@ -112,11 +123,13 @@
                                     MENUNGGU
                                 </span>
                             @elseif($StatusPemohonPenggalangan == 'AKTIF')
-                                <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
+                                <!-- Tombol untuk mengarahkan ke halaman pembuatan penggalangan dana -->
+                                <a href="{{ route('admin.proyek_penggalangan.create') }}"
+                                    class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full inline-block">
                                     <span class="transition-transform duration-200 ease-out hover:scale-105 inline-block">
                                         BUAT PENGGALANGAN DANA
                                     </span>
-                                </button>
+                                </a>
                             @else
                                 <button type="submit"
                                     class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
@@ -128,5 +141,26 @@
                 </div>
             </div>
         </div>
+
+        <!-- JavaScript untuk menghilangkan pesan setelah 10 detik dengan efek fade-out -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                setTimeout(function() {
+                    let successMessage = document.getElementById("success-message");
+                    let errorMessage = document.getElementById("error-message");
+
+                    if (successMessage) {
+                        successMessage.classList.add("opacity-0"); // Tambahkan efek fade-out
+                        setTimeout(() => successMessage.remove(),
+                            1000); // Hapus elemen setelah transisi selesai
+                    }
+
+                    if (errorMessage) {
+                        errorMessage.classList.add("opacity-0"); // Tambahkan efek fade-out
+                        setTimeout(() => errorMessage.remove(), 1000); // Hapus elemen setelah transisi selesai
+                    }
+                }, 10000); // Tunggu 10 detik sebelum mulai fade-out
+            });
+        </script>
     @endrole
 </x-app-layout>
