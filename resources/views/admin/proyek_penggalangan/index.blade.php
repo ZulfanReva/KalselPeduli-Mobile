@@ -49,7 +49,7 @@
                             </h3>
                         </div>
                         <div class="hidden md:flex flex-row items-center gap-x-3">
-                            <a href="#"
+                            <a href="{{route ('admin.proyek_penggalangan.show', $proyek)}}"
                                 class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
                                 Lihat Detail
                             </a>

@@ -88,7 +88,15 @@ class ProyekPenggalanganController extends Controller
      */
     public function show(ProyekPenggalangan $proyekPenggalangan)
     {
-        //
+
+        $TotalDonasi = $proyekPenggalangan->TotalDonasiTerkumpul(); 
+        $target_donasi = $TotalDonasi >= $proyekPenggalangan->target_donasi;
+
+        $persentase = ($TotalDonasi / $proyekPenggalangan->target_donasi) * 100;
+        if ($persentase > 100) {$persentase = 100;}
+
+        // Menggunakan $proyekPenggalangan yang sudah otomatis di-binding dengan route model
+        return view('admin.proyek_penggalangan.show', compact('proyekPenggalangan', 'target_donasi', 'persentase' ));
     }
 
     /**
