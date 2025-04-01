@@ -18,8 +18,8 @@
                 @forelse ($item as $kategori)
                     <div class="item-card flex flex-row justify-between items-center">
                         <div class="flex flex-row items-center gap-x-3">
-                            <img src="{{ Storage::url($kategori->ikon) }}"
-                                alt="{{ $kategori->nama }}" class="rounded-2xl w-[90px] max-h-[90px]">
+                            <img src="{{ Storage::url($kategori->ikon) }}" alt="{{ $kategori->nama }}"
+                                class="rounded-2xl w-[90px] max-h-[90px]">
 
                             <div class="flex flex-col items-start w-40">
                                 <h3
@@ -32,10 +32,11 @@
                         <div class="hidden md:flex flex-col items-start w-40">
                             <p class="text-slate-500 dark:text-gray-400 text-xs md:text-sm">Dibuat Pada</p>
                             <h3
-                                class="text-indigo-950 dark:text-gray-200 text-sm md:text-base font-bold leading-tight line-clamp-2">
-                                {{ \Carbon\Carbon::parse($kategori->created_at)->setTimezone('Asia/Jakarta')->format('d M Y') }}
+                                class="text-indigo-950 dark:text-gray-200 text-sm md:text-base font-bold leading-tight whitespace-nowrap">
+                                {{ \Carbon\Carbon::parse($kategori->created_at)->setTimezone('Asia/Jakarta')->format('d M Y - H:i:s') }}
                             </h3>
                         </div>
+
 
                         <div class="hidden md:flex flex-row items-center gap-x-3">
                             <a href="{{ route('admin.kategori.edit', $kategori->id) }}"

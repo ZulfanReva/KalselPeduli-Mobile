@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Donatur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DonaturController extends Controller
 {
@@ -39,6 +40,7 @@ class DonaturController extends Controller
     public function show(Donatur $donatur)
     {
         //
+        return view('admin.donatur.show', compact('donatur'));
     }
 
     /**
@@ -54,7 +56,13 @@ class DonaturController extends Controller
      */
     public function update(Request $request, Donatur $donatur)
     {
-        //
+        DB::transaction(function () use ($donatur) {
+            $donatur->update([
+                'sudah_dibayar' => true,
+            ]);
+        });
+
+        return redirect()->route('admin.donatur.show', $donatur);
     }
 
     /**
