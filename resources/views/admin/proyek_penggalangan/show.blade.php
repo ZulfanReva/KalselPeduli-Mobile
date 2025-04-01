@@ -10,6 +10,40 @@
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
+
+
+                <div class="flex flex-col justify-between w-full">
+                    @if ($proyekPenggalangan->status_aktif)
+                        <span class="text-white text-center font-bold bg-green-500 rounded-2xl w-full p-5">
+                            Status: Proyek penggalangan sudah aktif dan dapat menerima donasi
+                        </span>
+                    @else
+                        <span class="text-white text-center font-bold bg-red-500 rounded-2xl w-full p-5">
+                            Status: Proyek penggalangan belum disetujui oleh Admin
+                        </span>
+                        @role('owner')
+                            <div class="flex flex-row gap-3 mt-4 items-center justify-center">
+                                <form role="owner" action="{{  route ('admin.proyek_penggalangan.status_aktif', $proyekPenggalangan) }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full w-fit transition-transform duration-200 ease-out hover:scale-105">
+                                        Terima
+                                    </button>
+                                </form>
+                                <form role="owner" action="#" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="font-bold py-4 px-6 bg-red-600 text-white rounded-full w-fit transition-transform duration-200 ease-out hover:scale-105">
+                                        Tolak
+                                    </button>
+                                </form>
+                            </div>
+                        @endrole
+                    @endif
+                </div>
+
+                <hr>
+
                 <div class="item-card flex flex-row gap-y-10 justify-between items-center">
                     <div class="flex flex-row items-center gap-x-3">
                         <img src="{{ Storage::url($proyekPenggalangan->foto) }}" alt="Fundraiser Image"
@@ -123,7 +157,8 @@
 
                 @empty
                     <div class="text-center py-10">
-                        <p class="text-slate-500 dark:text-gray-400 text-lg font-semibold">Belum ada yang memberikan donasi.</p>
+                        <p class="text-slate-500 dark:text-gray-400 text-lg font-semibold">Belum ada yang memberikan
+                            donasi.</p>
                     </div>
                 @endforelse
             </div>

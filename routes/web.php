@@ -56,9 +56,9 @@ Route::middleware('auth')->group(function () {
         Route::resource('proyek_penggalangan', ProyekPenggalanganController::class)
             ->middleware('role:owner|pemohon_penggalangan');
 
-        Route::post('/proyek_penggalangan/active/{proyek_penggalangan}', [ProyekPenggalanganController::class, 'status_aktif'])
+        Route::post('/proyek_penggalangan/status_aktif/{proyek_penggalangan}', [ProyekPenggalanganController::class, 'status_aktif'])
             ->middleware('role:owner')
-            ->name('proyek_penggalangan.status_aktif'); // Diperbaiki
+            ->name('proyek_penggalangan.status_aktif');
 
 
     });

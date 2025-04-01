@@ -44,7 +44,17 @@ class ProyekPenggalanganController extends Controller
         return view('admin.proyek_penggalangan.create', ['item' => $kategori]);
     }
 
-    public function status_aktif() {}
+    public function status_aktif(ProyekPenggalangan $proyekPenggalangan)
+    {
+        DB::transaction(function () use ($proyekPenggalangan) {
+            // Update data proyek
+            $proyekPenggalangan->update(['status_aktif' => true]);
+        });
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('admin.proyek_penggalangan.show', $proyekPenggalangan)
+            ->with('success', 'Proyek penggalangan berhasil diperbarui.');
+    }
 
     /**
      * Store a newly created resource in storage.
