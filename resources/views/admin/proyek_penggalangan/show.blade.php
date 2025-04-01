@@ -23,7 +23,9 @@
                         </span>
                         @role('owner')
                             <div class="flex flex-row gap-3 mt-4 items-center justify-center">
-                                <form role="owner" action="{{  route ('admin.proyek_penggalangan.status_aktif', $proyekPenggalangan) }}" method="POST">
+                                <form role="owner"
+                                    action="{{ route('admin.proyek_penggalangan.status_aktif', $proyekPenggalangan) }}"
+                                    method="POST">
                                     @csrf
                                     <button type="submit"
                                         class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full w-fit transition-transform duration-200 ease-out hover:scale-105">
@@ -81,7 +83,7 @@
                 <div class="flex flex-row justify-between items-center">
                     <div>
                         <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
-                            {{ 'Rp ' . number_format($proyekPenggalangan->donasi_terkumpul, 0, ',', '.') }}</h3>
+                            {{ 'Rp ' . number_format($TotalDonasi, 0, ',', '.') }}</h3>
                         <p class="text-slate-500 dark:text-gray-400 text-sm">Total Donasi Terkumpul</p>
                     </div>
                     <div class="w-[400px] rounded-full h-2.5 bg-slate-300 dark:bg-gray-700">
@@ -96,6 +98,7 @@
                 </div>
 
 
+
                 @if ($target_donasi)
                     <hr class="my-5 dark:border-gray-600">
                     <h3 class="text-indigo-950 dark:text-gray-200 text-2xl font-bold">Withdraw Donations</h3>
@@ -104,31 +107,31 @@
                         @csrf
 
                         <div>
-                            <x-input-label for="bank_name" :value="__('Bank Name')" />
-                            <x-text-input id="bank_name" class="block mt-1 w-full" type="text" name="bank_name"
-                                :value="old('bank_name')" required autofocus autocomplete="bank_name" />
-                            <x-input-error :messages="$errors->get('bank_name')" class="mt-2" />
+                            <x-input-label for="nama_bank" :value="__('Nama Bank')" />
+                            <x-text-input id="nama_bank" class="block mt-1 w-full" type="text" name="nama_bank"
+                                :value="old('nama_bank')" required autofocus autocomplete="nama_bank" />
+                            <x-input-error :messages="$errors->get('nama_bank')" class="mt-2" />
                         </div>
 
                         <div class="mt-4">
-                            <x-input-label for="bank_account_name" :value="__('Bank Account Name')" />
-                            <x-text-input id="bank_account_name" class="block mt-1 w-full" type="text"
-                                name="bank_account_name" :value="old('bank_account_name')" required autofocus
-                                autocomplete="bank_account_name" />
-                            <x-input-error :messages="$errors->get('bank_account_name')" class="mt-2" />
+                            <x-input-label for="nama_rekening" :value="__('Nama Rekening Bank')" />
+                            <x-text-input id="nama_rekening" class="block mt-1 w-full" type="text"
+                                name="nama_rekening" :value="old('nama_rekening')" required autofocus
+                                autocomplete="nama_rekening" />
+                            <x-input-error :messages="$errors->get('nama_rekening')" class="mt-2" />
                         </div>
 
                         <div class="mt-4">
-                            <x-input-label for="bank_account_number" :value="__('Bank Account Number')" />
-                            <x-text-input id="bank_account_number" class="block mt-1 w-full" type="text"
-                                name="bank_account_number" :value="old('bank_account_number')" required autofocus
-                                autocomplete="bank_account_number" />
-                            <x-input-error :messages="$errors->get('bank_account_number')" class="mt-2" />
+                            <x-input-label for="nomor_rekening" :value="__('Nomor Rekening Bank')" />
+                            <x-text-input id="nomor_rekening" class="block mt-1 w-full" type="text"
+                                name="nomor_rekening" :value="old('nomor_rekening')" required autofocus
+                                autocomplete="nomor_rekening" />
+                            <x-input-error :messages="$errors->get('nomor_rekening')" class="mt-2" />
                         </div>
 
                         <div class="flex items-center justify-end mt-4">
                             <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
-                                Request Withdraw
+                                Penarikan Dana
                             </button>
                         </div>
                     </form>

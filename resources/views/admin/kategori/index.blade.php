@@ -18,7 +18,7 @@
                 @forelse ($item as $kategori)
                     <div class="item-card flex flex-row justify-between items-center">
                         <div class="flex flex-row items-center gap-x-3">
-                            <img src="{{ Storage::url($kategori->ikon) ?? 'https://cdn4.iconfinder.com/data/icons/picture-sharing-sites/32/No_Image-512.png' }}"
+                            <img src="{{ Storage::url($kategori->ikon) }}"
                                 alt="{{ $kategori->nama }}" class="rounded-2xl w-[90px] max-h-[90px]">
 
                             <div class="flex flex-col items-start w-40">

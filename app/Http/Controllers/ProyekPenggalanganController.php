@@ -109,7 +109,7 @@ class ProyekPenggalanganController extends Controller
         }
 
         // Menggunakan $proyekPenggalangan yang sudah otomatis di-binding dengan route model
-        return view('admin.proyek_penggalangan.show', compact('proyekPenggalangan', 'target_donasi', 'persentase'));
+        return view('admin.proyek_penggalangan.show', compact('proyekPenggalangan', 'TotalDonasi', 'target_donasi', 'persentase'));
     }
 
     /**

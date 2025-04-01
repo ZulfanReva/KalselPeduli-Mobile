@@ -12,7 +12,9 @@ class DonaturController extends Controller
      */
     public function index()
     {
-        //
+        $donatur = Donatur::with(['proyekPenggalangan'])->orderByDesc('id')->paginate(5);
+
+        return view('admin.donatur.index', compact('donatur'));
     }
 
     /**
