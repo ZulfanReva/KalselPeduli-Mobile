@@ -112,6 +112,15 @@ class ProyekPenggalanganController extends Controller
         return view('admin.proyek_penggalangan.show', compact('proyekPenggalangan', 'TotalDonasi', 'target_donasi', 'persentase'));
     }
 
+    public function laporan_detail(ProyekPenggalangan $proyekPenggalangan)
+    {
+        // Ambil penarikan dana yang terkait dengan proyek ini
+        $penarikanDana = $proyekPenggalangan->penarikanDana()->first();
+
+        return view('admin.laporan_penggalangan.details', compact('proyekPenggalangan', 'penarikanDana'));
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      */

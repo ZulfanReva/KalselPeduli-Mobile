@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PenarikanDana;
 use Illuminate\Http\Request;
+use App\Models\PenarikanDana;
+use App\Models\ProyekPenggalangan;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StorePenarikanDanaRequest;
 
 class PenarikanDanaController extends Controller
 {
@@ -27,9 +31,30 @@ class PenarikanDanaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePenarikanDanaRequest $request, ProyekPenggalangan $proyekPenggalangan)
     {
-        //
+        // dd($proyekPenggalangan);
+        $sudahPenarikanDana = $proyekPenggalangan->penarikanDana()->exists();
+
+        if ($sudahPenarikanDana) {
+            return redirect()->route('admin.proyek_penggalangan.show', $proyekPenggalangan);
+        }
+ 
+        DB::transaction(function () use ($request, $proyekPenggalangan) {
+            $validated = $request->validated();
+            $validated['proyek_penggalangan_id'] = $proyekPenggalangan->id;
+            $validated['pemohon_penggalangan_id'] = Auth::user()->pemohonPenggalangan->id;
+            $validated['sudah_diterima'] = false;
+            $validated['sudah_disetujui'] = false;
+            $validated['jumlah_diminta'] = $proyekPenggalangan->TotalDonasiTerkumpul();
+            $validated['jumlah_diterima'] = 0;
+            $validated['bukti_pembayaran'] = 'buktipembayaran/buktitransferpalsu.png';
+
+            $proyekPenggalangan->penarikanDana()->create($validated);
+        });
+
+
+        return redirect()->route('admin.laporan_penggalangan.index');
     }
 
     /**

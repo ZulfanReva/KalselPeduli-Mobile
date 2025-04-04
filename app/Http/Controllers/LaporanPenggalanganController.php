@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\LaporanPenggalangan;
 use Illuminate\Http\Request;
+use App\Models\LaporanPenggalangan;
+use App\Models\PenarikanDana;
+use Illuminate\Support\Facades\Auth;
 
 class LaporanPenggalanganController extends Controller
 {
@@ -12,7 +14,18 @@ class LaporanPenggalanganController extends Controller
      */
     public function index()
     {
-        return view('admin.laporan_penggalangan.index');
+        $user = Auth::user();
+        $pemohonPenggalanganId = $user->pemohonPenggalangan->id;
+
+        $penarikanDana = PenarikanDana::where('pemohon_penggalangan_id', $pemohonPenggalanganId)
+            ->orderByDesc('id')->get();
+
+        return view('admin.laporan_penggalangan.index', compact('penarikanDana'));
+    }
+
+    public function laporan_detail(PenarikanDana $penarikanDana)
+    {
+        return view('admin.laporan_penggalangan.details', compact('penarikanDana'));
     }
 
     /**

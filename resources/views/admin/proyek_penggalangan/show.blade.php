@@ -99,11 +99,12 @@
 
 
 
-                @if ($target_donasi)
+                @if ($target_donasi && !$proyekPenggalangan->penarikanDana()->exists())
                     <hr class="my-5 dark:border-gray-600">
-                    <h3 class="text-indigo-950 dark:text-gray-200 text-2xl font-bold">Withdraw Donations</h3>
+                    <h3 class="text-indigo-950 dark:text-gray-200 text-2xl font-bold">Penarikan Dana</h3>
 
-                    <form method="POST" action="#" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('admin.penarikan_dana.store', $proyekPenggalangan->id) }}"
+                        enctype="multipart/form-data">
                         @csrf
 
                         <div>
@@ -135,7 +136,11 @@
                             </button>
                         </div>
                     </form>
+                @else
+                    <p class="text-red-500 font-bold text-center">Pengajuan penarikan dana sudah dilakukan.
+                    </p>
                 @endif
+
 
                 <hr class="my-5 dark:border-gray-600">
 

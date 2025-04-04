@@ -42,12 +42,17 @@ Route::middleware('auth')->group(function () {
         Route::resource('penarikan_dana', PenarikanDanaController::class)
             ->middleware('role:owner|pemohon_penggalangan');
 
-        Route::post('/penarikan_dana/request/{fundraising}', [PenarikanDanaController::class, 'store'])
+        Route::post('/penarikan_dana/request/{proyekPenggalangan}', [PenarikanDanaController::class, 'store'])
             ->middleware('role:pemohon_penggalangan')
             ->name('penarikan_dana.store');
 
         Route::resource('laporan_penggalangan', LaporanPenggalanganController::class)
             ->middleware('role:owner|pemohon_penggalangan');
+
+        // Rute untuk detail laporan penggalangan (FIX ERROR)
+        Route::get('/laporan_penggalangan/details/{penarikanDana}', [LaporanPenggalanganController::class, 'laporan_detail'])
+            ->middleware('role:owner|pemohon_penggalangan')
+            ->name('laporan_penggalangan.details');
 
         Route::post('/laporan_penggalangan/update/{proyek_penggalangan}', [LaporanPenggalanganController::class, 'store'])
             ->middleware('role:pemohon_penggalangan')
@@ -59,8 +64,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/proyek_penggalangan/status_aktif/{proyek_penggalangan}', [ProyekPenggalanganController::class, 'status_aktif'])
             ->middleware('role:owner')
             ->name('proyek_penggalangan.status_aktif');
-
-
     });
 });
 
