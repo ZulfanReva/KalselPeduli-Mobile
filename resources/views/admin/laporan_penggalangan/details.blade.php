@@ -10,7 +10,7 @@
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-10 flex flex-col gap-y-5">
-                <h3 class="text-indigo-950 dark:text-gray-200 text-3xl font-bold mb-5">Penarikan Dana</h3>
+                <h3 class="text-indigo-950 dark:text-gray-200 text-3xl font-bold mb-5">Laporan Penarikan Dana</h3>
                 <div class="flex flex-row gap-x-16">
                     <svg width="100" height="100" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +30,7 @@
                         <div>
                             <p class="text-slate-500 dark:text-gray-400 text-sm">Total Donasi Diterima</p>
                             <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">Rp
-                                {{ number_format($penarikanDana->jumlah_diterima, 0, ',', '.') }}</h3>
+                                {{ number_format($penarikanDana->proyekPenggalangan->target_donasi, 0, ',', '.') }}</h3>
                         </div>
                         @if ($penarikanDana->sudah_diterima)
                             <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
@@ -45,17 +45,16 @@
                                 MENUNGGU
                             </span>
                         @endif
-
                     </div>
+
                     <div>
                         <img src="{{ Storage::url($penarikanDana->proyekPenggalangan->foto) }}" alt="Fundraiser Image"
                             class="rounded-2xl object-cover w-[200px] h-[150px]">
                         <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
                             {{ $penarikanDana->proyekPenggalangan->nama }}</h3>
-                        <p class="text-slate-500 dark:text-gray-400 text-sm text">
+                        <p class="text-slate-500 dark:text-gray-400 text-sm">
                             {{ $penarikanDana->proyekPenggalangan->deskripsi }}</p>
                         <div>
-                            {{-- <p class="text-slate-500 dark:text-gray-400 text-sm">Dibuat pada</p> --}}
                             <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
                                 {{ \Carbon\Carbon::parse($penarikanDana->created_at)->setTimezone('Asia/Jakarta')->format('d M Y - H:i:s') }}
                             </h3>
@@ -64,7 +63,7 @@
                 </div>
 
                 @if ($penarikanDana->sudah_disetujui)
-                    <hr class="my-5 dark:border-gray-600">
+                    <hr class="my-5 border-gray-300 dark:border-gray-600">
                     <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold mb-5">Dikirim ke:</h3>
                     <div class="flex flex-row gap-x-10">
                         <div>
@@ -84,35 +83,52 @@
                                 {{ $penarikanDana->nomor_rekening }}</h3>
                         </div>
                     </div>
-                    <hr class="my-5">
-                    <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold mb-5">Uang sudah ditransfer oleh Admin</h3>
-                    <img src="{{ Storage::url ($penarikanDana->bukti_penarikan) }}" alt=""
+                    <hr class="my-5 border-gray-300 dark:border-gray-600">
+                    <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold mb-5">Uang sudah ditransfer oleh
+                        Admin</h3>
+                    <img src="{{ Storage::url($penarikanDana->bukti_penarikan) }}" alt=""
                         class="rounded-2xl object-cover w-[300px] h-[200px] mb-3">
-                    <hr class="my-5">
-                    <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">Apakah kamu sudah menerima uang?</h3>
-                    <form action="#" method="POST">
-                        @csrf
-                        <div>
-                            <x-input-label for="nama" :value="__('Nama')" />
-                            <x-text-input id="nama" class="block mt-1 w-full" type="text" name="nama"
-                                :value="old('nama')" required autofocus autocomplete="nama" />
-                            <x-input-error :messages="$errors->get('nama')" class="mt-2" />
-                        </div>
-                        <div class="mt-4">
-                            <x-input-label for="catatan" :value="__('Catatan')" />
-                            <textarea name="catatan" id="catatan" cols="30" rows="5" class="border border-slate-300 rounded-xl w-full"></textarea>
-                            <x-input-error :messages="$errors->get('catatan')" class="mt-2" />
-                        </div>
-                        <div class="mt-4 w-fit">
-                            <x-input-label for="foto" :value="__('Foto')" />
-                            <x-text-input id="foto" class="mb-7 block mt-1 w-full" type="file" name="foto"
-                                required autofocus autocomplete="foto" />
-                            <x-input-error :messages="$errors->get('foto')" class="mt-2" />
-                        </div>
-                        <button type="submit" class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full">
-                            Perbaharui Laporan
-                        </button>
-                    </form>
+
+                    @if (!$penarikanDana->sudah_diterima)
+                        <hr class="my-5 border-gray-300 dark:border-gray-600">
+                        <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">Apakah kamu sudah menerima
+                            uang?</h3>
+                        <form
+                            action="{{ route('admin.laporan_penggalangan.store', $penarikanDana->proyek_penggalangan_id) }}"
+                            method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div>
+                                <x-input-label for="nama" :value="__('Nama')"
+                                    class="text-gray-700 dark:text-gray-300" />
+                                <x-text-input id="nama"
+                                    class="block mt-1 w-full border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200"
+                                    type="text" name="nama" :value="old('nama')" required autofocus
+                                    autocomplete="nama" />
+                                <x-input-error :messages="$errors->get('nama')" class="mt-2 text-red-600 dark:text-red-400" />
+                            </div>
+                            <div class="mt-4">
+                                <x-input-label for="catatan" :value="__('Catatan')"
+                                    class="text-gray-700 dark:text-gray-300" />
+                                <textarea name="catatan" id="catatan" cols="30" rows="5"
+                                    class="border-gray-300 dark:border-gray-600 rounded-xl w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200"></textarea>
+                                <x-input-error :messages="$errors->get('catatan')" class="mt-2 text-red-600 dark:text-red-400" />
+                            </div>
+                            <div class="mt-4 w-fit">
+                                <x-input-label for="foto" :value="__('Foto')"
+                                    class="text-gray-700 dark:text-gray-300" />
+                                <x-text-input id="foto"
+                                    class="mb-7 block mt-1 w-full border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200"
+                                    type="file" name="foto" required autofocus autocomplete="foto" />
+                                <x-input-error :messages="$errors->get('foto')" class="mt-2 text-red-600 dark:text-red-400" />
+                            </div>
+                            <div class="mt-4 flex justify-end">
+                                <button type="submit"
+                                    class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full hover:bg-indigo-600 transition duration-200">
+                                    Perbaharui Laporan
+                                </button>
+                            </div>
+                        </form>
+                    @endif
                 @endif
             </div>
         </div>

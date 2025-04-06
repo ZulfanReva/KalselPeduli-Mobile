@@ -35,8 +35,8 @@
                             </h3>
                         </div>
 
-                        @if ($penarikanDana->sudah_diterima)
-                            @if ($penarikanDana->sudah_disetujui)
+                        @if ($penarikanDana->sudah_disetujui)
+                            @if ($penarikanDana->sudah_diterima)
                                 <span class="w-fit text-sm font-bold py-2 px-3 rounded-full bg-green-500 text-white">
                                     BERHASIL
                                 </span>

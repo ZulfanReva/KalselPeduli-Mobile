@@ -11,7 +11,7 @@ class UpdatePenarikanDanaRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->hasAnyRole(['owner']);
+        return auth()->user()->hasAnyRole(['owner']);
     }
 
     /**
@@ -19,7 +19,7 @@ class UpdatePenarikanDanaRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
             'bukti_penarikan' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:10240'], // Opsional, hanya gambar JPG/JPEG/PNG, max 10MB

@@ -49,14 +49,13 @@ Route::middleware('auth')->group(function () {
         Route::resource('laporan_penggalangan', LaporanPenggalanganController::class)
             ->middleware('role:owner|pemohon_penggalangan');
 
-        // Rute untuk detail laporan penggalangan (FIX ERROR)
+        Route::post('/laporan_penggalangan/store/{proyekPenggalangan}', [LaporanPenggalanganController::class, 'store'])
+            ->middleware('role:pemohon_penggalangan')
+            ->name('laporan_penggalangan.store');
+
         Route::get('/laporan_penggalangan/details/{penarikanDana}', [LaporanPenggalanganController::class, 'laporan_detail'])
             ->middleware('role:owner|pemohon_penggalangan')
             ->name('laporan_penggalangan.details');
-
-        Route::post('/laporan_penggalangan/update/{proyek_penggalangan}', [LaporanPenggalanganController::class, 'store'])
-            ->middleware('role:pemohon_penggalangan')
-            ->name('laporan_penggalangan.store');
 
         Route::resource('proyek_penggalangan', ProyekPenggalanganController::class)
             ->middleware('role:owner|pemohon_penggalangan');

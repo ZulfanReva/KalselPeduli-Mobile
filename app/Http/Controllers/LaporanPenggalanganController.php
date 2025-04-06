@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\LaporanPenggalangan;
 use App\Models\PenarikanDana;
+use App\Models\ProyekPenggalangan;
+use Illuminate\Support\Facades\DB;
+use App\Models\LaporanPenggalangan;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreProyekPenggalanganRequest;
+use App\Http\Requests\StoreLaporanPenggalanganRequest;
 
 class LaporanPenggalanganController extends Controller
 {
@@ -39,9 +43,35 @@ class LaporanPenggalanganController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreLaporanPenggalanganRequest $request, $proyekPenggalanganId)
     {
-        //
+        $proyekPenggalangan = ProyekPenggalangan::findOrFail($proyekPenggalanganId);
+
+        DB::transaction(function () use ($request, $proyekPenggalangan) {
+            $validated = $request->validated();
+
+            if ($request->hasFile('foto')) {
+                $fotoPath = $request->file('foto')->store('fotos', 'public');
+                $validated['foto'] = $fotoPath;
+            }
+
+            $validated['proyek_penggalangan_id'] = $proyekPenggalangan->id;
+
+            $laporanPenggalangan = LaporanPenggalangan::create($validated);
+
+            $penarikanDanaUpdate = PenarikanDana::where('proyek_penggalangan_id', $proyekPenggalangan->id)
+                ->latest()
+                ->first();
+
+            $penarikanDanaUpdate->update([
+                'sudah_diterima' => true
+            ]);
+
+            $proyekPenggalangan->update([
+                'sudah_selesai' => true
+            ]);
+        });
+        return redirect()->route('admin.laporan_penggalangan.details');
     }
 
     /**
