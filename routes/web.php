@@ -1,16 +1,35 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FrontController;
 use App\Http\Controllers\DonaturController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenarikanDanaController;
+use App\Http\Controllers\ProyekPenggalanganController;
 use App\Http\Controllers\LaporanPenggalanganController;
 use App\Http\Controllers\PemohonPenggalanganController;
-use App\Http\Controllers\PenarikanDanaController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ProyekPenggalanganController;
-use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/', [FrontController::class, 'index'])->name('frontend.index');
+
+Route::get('/kategori/{kategori}', [FrontController::class, 'kategori'])
+    ->name('frontend.kategori');
+
+Route::get('/detail/{proyekPenggalangan:slug}', [FrontController::class, 'detail'])
+    ->name('frontend.detail');
+
+Route::get('/kirim-dukungan/{proyekPenggalangan:slug}', [FrontController::class, 'kirim-dukungan'])
+    ->name('frontend.kirim-dukungan');
+
+Route::get('/pembayaran/{proyekPenggalangan:slug}/{TotalDonasiTerkumpul}', [FrontController::class, 'pembayaran'])
+    ->name('frontend.pembayaran');
+
+Route::post('/pembayaran/store/{proyekPenggalangan:slug}/{TotalDonasiTerkumpul}', [FrontController::class, 'store'])
+    ->name('frontend.store');
+
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
