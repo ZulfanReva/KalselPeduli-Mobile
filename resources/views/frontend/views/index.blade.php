@@ -60,14 +60,14 @@
                 @forelse ($proyekPenggalangan as $proyek)
                     <div class="px-2 first-of-type:pl-4 last-of-type:pr-4 mb-6">
                         <div class="flex flex-col gap-[14px] rounded-2xl border border-[#E8E9EE] p-[14px] w-[208px]">
-                            <a href="details.html">
+                            <a href="{{ route ('frontend.detail', $proyek) }}">
                                 <div class="rounded-2xl w-full h-[120px] flex shrink-0 overflow-hidden">
                                     <img src="{{ Storage::url($proyek->foto) }}" class="w-full h-full object-cover"
                                         alt="thumbnail">
                                 </div>
                             </a>
                             <div class="flex flex-col gap-[6px]">
-                                <a href="details.html"
+                                <a href="{{ route ('frontend.detail', $proyek) }}"
                                     class="font-bold line-clamp-2 hover:line-clamp-none">{{ $proyek->nama }}</a>
                                 <p class="text-xs leading-[18px]">Target Donasi<span
                                         class="font-bold text-[#FF7815]">{{ 'Rp ' . number_format($proyek->target_donasi, 0, ',', '.') }}</span>
@@ -79,8 +79,8 @@
                     </div>
                 @empty
                     <div class="text-center py-10">
-                        <p class="text-slate-500 dark:text-gray-400 text-lg font-semibold">Belum ada penggalangan dana saat
-                            ini.</p>
+                        <p class="text-white text-lg font-semibold">Belum ada penggalangan dana saat ini.
+                        </p>
                     </div>
                 @endforelse
             </div>
@@ -93,17 +93,20 @@
             <div class="flex flex-col gap-4 mt-[14px] px-4">
 
                 @forelse ($proyekPenggalangan as $proyek)
-                    <a href="details.html" class="card">
+                    <a href="{{ route ('frontend.detail', $proyek) }}" class="card">
                         <div class="w-full border border-[#E8E9EE] flex items-center p-[14px] gap-3 rounded-2xl bg-white">
                             <div class="w-20 h-[90px] flex shrink-0 rounded-2xl overflow-hidden">
-                                <img src="{{ Storage::url($proyek->foto) }}"
-                                    class="w-full h-full object-cover" alt="thumbnail">
+                                <img src="{{ Storage::url($proyek->foto) }}" class="w-full h-full object-cover"
+                                    alt="thumbnail">
                             </div>
                             <div class="flex flex-col gap-1">
                                 <p class="font-bold line-clamp-1 hover:line-clamp-none">{{ $proyek->nama }}</p>
-                                <p class="text-xs leading-[18px]">Target Donasi <span class="font-bold text-[#FF7815]">{{ 'Rp ' . number_format($proyek->target_donasi, 0, ',', '.') }}</span></p>
+                                <p class="text-xs leading-[18px]">Target Donasi <span
+                                        class="font-bold text-[#FF7815]">{{ 'Rp ' . number_format($proyek->target_donasi, 0, ',', '.') }}</span>
+                                </p>
                                 <div class="flex items-center gap-1 sm:flex-row-reverse sm:justify-end">
-                                    <p class="font-semibold sm:font-medium text-xs leading-[18px]">{{ $proyek->pemohonPenggalangan->user->nama }}</p>
+                                    <p class="font-semibold sm:font-medium text-xs leading-[18px]">
+                                        {{ $proyek->pemohonPenggalangan->user->nama }}</p>
                                     <div class="flex shrink-0">
                                         <img src="{{ asset('assets/images/icons/tick-circle.svg') }}" alt="icon">
                                     </div>

@@ -13,6 +13,18 @@ class FrontController extends Controller
         $kategori = Kategori::all();
         $proyekPenggalangan = ProyekPenggalangan::with('kategori', 'pemohonPenggalangan')->where('status_aktif', 1)->orderByDesc('id')->get();
 
-        return view('frontend.views.index', compact ('kategori', 'proyekPenggalangan'));
+        return view('frontend.views.index', compact('kategori', 'proyekPenggalangan'));
+    }
+
+    public function kategori(Kategori $kategori)
+    {
+        return view('frontend.views.kategori', compact('kategori'));
+    }
+
+    public function detail(ProyekPenggalangan $proyekPenggalangan)
+    {
+        $proyek = $proyekPenggalangan; 
+        $target_donasi = $proyek->TotalDonasiTerkumpul() >= $proyek->target_donasi;
+        return view('frontend.views.detail', compact('proyek'));
     }
 }
