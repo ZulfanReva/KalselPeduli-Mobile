@@ -54,4 +54,14 @@ class ProyekPenggalangan extends Model
     {
         return $this->hasMany(LaporanPenggalangan::class);
     }
+
+    public function AtributPersentase ()
+    {
+        $TotalDonasi = $this->TotalDonasiTerkumpul();
+        if($this->target_donasi > 0) {
+            $persentase = ($TotalDonasi / $this->target_donasi) * 100;
+            return $persentase > 100 ? 100 : $persentase;
+        }
+        return 0;
+    }
 }
