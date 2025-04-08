@@ -24,7 +24,13 @@ class FrontController extends Controller
     public function detail(ProyekPenggalangan $proyekPenggalangan)
     {
         $proyek = $proyekPenggalangan; 
-        $target_donasi = $proyek->TotalDonasiTerkumpul() >= $proyek->target_donasi;
-        return view('frontend.views.detail', compact('proyek'));
+        $target_tercapai = $proyek->TotalDonasiTerkumpul() >= $proyek->target_donasi;
+        return view('frontend.views.detail', compact('proyek', 'target_tercapai'));
+    }
+
+    public function dukungan (ProyekPenggalangan $proyekPenggalangan)
+    {
+        $proyek = $proyekPenggalangan; 
+        return view('frontend.views.kirim-dukungan', compact('proyek'));
     }
 }

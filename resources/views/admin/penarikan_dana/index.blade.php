@@ -14,12 +14,8 @@
                 @forelse ($penarikanDana as $penarikanDana)
                     <div
                         class="item-card flex flex-row justify-between items-center bg-white dark:bg-gray-800 rounded-lg p-6 space-x-5">
-                        <svg width="46" height="46" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <!-- SVG tetap sama -->
-                            <path opacity="0.4" d="..." fill="#292D32" />
-                            <path d="..." fill="#292D32" />
-                        </svg>
+                        <img src="{{ Storage::url($penarikanDana->proyekPenggalangan->foto) }}" alt="Fundraiser Image"
+                            class="rounded-2xl object-cover w-[120px] h-[90px]">
 
                         <div>
                             <p class="text-slate-500 dark:text-gray-400 text-sm">Total Donasi Terkumpul</p>
@@ -57,7 +53,7 @@
                         @endif
 
                         <div class="hidden md:flex flex-row items-center gap-x-3">
-                            <a href="{{ route ('admin.penarikan_dana.show', $penarikanDana) }}"
+                            <a href="{{ route('admin.penarikan_dana.show', $penarikanDana) }}"
                                 class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full hover:bg-indigo-600 transition duration-200">
                                 Lihat Detail
                             </a>

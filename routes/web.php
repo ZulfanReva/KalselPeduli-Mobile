@@ -19,13 +19,13 @@ Route::get('/kategori/{kategori}', [FrontController::class, 'kategori'])
 Route::get('/detail/{proyekPenggalangan:slug}', [FrontController::class, 'detail'])
     ->name('frontend.detail');
 
-Route::get('/kirim-dukungan/{proyekPenggalangan:slug}', [FrontController::class, 'kirim-dukungan'])
+Route::get('/kirim-dukungan/{proyekPenggalangan:slug}', [FrontController::class, 'dukungan'])
     ->name('frontend.kirim-dukungan');
 
-Route::get('/pembayaran/{proyekPenggalangan:slug}/{TotalDonasiTerkumpul}', [FrontController::class, 'pembayaran'])
+Route::get('/pembayaran/{proyekPenggalangan:slug}/{jumlah_donasi}', [FrontController::class, 'pembayaran'])
     ->name('frontend.pembayaran');
 
-Route::post('/pembayaran/store/{proyekPenggalangan:slug}/{TotalDonasiTerkumpul}', [FrontController::class, 'store'])
+Route::post('/pembayaran/store/{proyekPenggalangan:slug}/{jumlah_donasi}', [FrontController::class, 'store'])
     ->name('frontend.store');
 
 

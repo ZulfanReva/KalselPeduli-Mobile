@@ -125,7 +125,11 @@
 
             </div>
         </div>
-        <a href="send-support.html"
-            class="p-[14px_20px] bg-[#76AE43] rounded-full text-white w-fit mx-auto font-semibold hover:shadow-[0_12px_20px_0_#76AE4380] transition-all duration-300 fixed bottom-[30px] transform -translate-x-1/2 left-1/2 z-40 text-nowrap">Mulai Berdonasi</a>
+
+        @if (!$target_tercapai)
+            <a href="{{ route ('frontend.kirim-dukungan', $proyek->slug) }}"
+                class="p-[14px_20px] bg-[#76AE43] rounded-full text-white w-fit mx-auto font-semibold hover:shadow-[0_12px_20px_0_#76AE4380] transition-all duration-300 fixed bottom-[30px] transform -translate-x-1/2 left-1/2 z-40 text-nowrap">Mulai
+                Berdonasi</a>
+        @endif
     </section>
 @endsection
