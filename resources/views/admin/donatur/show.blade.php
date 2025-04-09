@@ -64,7 +64,7 @@
                 </div>
                 <hr class="my-5 dark:border-gray-600">
                 <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold mb-5 text-center">Bukti Pembayaran</h3>
-                <img src="{{ $donatur->bukti_pembayaran }}" alt="{{ $donatur->bukti_pembayaran }}"
+                <img src="{{ Storage::url($donatur->bukti_pembayaran) }}" alt=""
                     class="rounded-2xl object-cover w-[300px] h-[200px] mb-3 mx-auto block">
                 @if (!$donatur->sudah_dibayar)
                     <hr class="my-5 dark:border-gray-600">
