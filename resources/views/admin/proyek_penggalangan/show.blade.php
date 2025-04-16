@@ -44,25 +44,27 @@
                     @endif
                 </div>
 
-                <hr>
+                <!-- Garis dengan efek gradasi memudar -->
+                <div class="w-5/6 mx-auto h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-5">
+                </div>
 
-                <div class="item-card flex flex-row gap-y-10 justify-between items-center">
-                    <div class="flex flex-row items-center gap-x-3">
+                <div class="item-card flex flex-row justify-between items-center gap-x-8">
+                    <div class="flex flex-row items-start gap-x-3 w-full md:w-1/2">
                         <img src="{{ Storage::url($proyekPenggalangan->foto) }}" alt="Fundraiser Image"
-                            class="rounded-2xl object-cover w-[200px] h-[150px]">
-                        <div class="flex flex-col">
-                            <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
-                                {{ $proyekPenggalangan->nama }}</h3>
-                            <p class="text-slate-500 dark:text-gray-400 text-sm">
-                                {{ $proyekPenggalangan->kategori->nama }}</p>
+                            class="rounded-2xl object-cover w-[200px] h-[150px] flex-shrink-0">
+                        <div class="flex flex-col w-[200px] h-[150px] justify-center">
+                            <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold break-words">
+                                {{ $proyekPenggalangan->nama }}
+                            </h3>
                         </div>
                     </div>
-                    <div class="flex flex-col">
+                    <div class="flex flex-col w-full md:w-1/6 text-center md:text-left">
                         <p class="text-slate-500 dark:text-gray-400 text-sm">Donatur</p>
                         <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
-                            {{ $proyekPenggalangan->donatur->count() }}</h3>
+                            {{ $proyekPenggalangan->donatur->count() }}
+                        </h3>
                     </div>
-                    <div class="flex flex-row items-center gap-x-3">
+                    <div class="flex flex-row items-center gap-x-3 w-full md:w-1/3 justify-center md:justify-end">
                         <a href="{{ route('admin.proyek_penggalangan.edit', $proyekPenggalangan) }}"
                             class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
                             Edit
@@ -79,28 +81,33 @@
                     </div>
                 </div>
 
-                <hr class="my-5 dark:border-gray-600">
+                <!-- Garis dengan efek gradasi memudar -->
+                <div class="w-5/6 mx-auto h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-5">
+                </div>
+
                 <div class="flex flex-row justify-between items-center">
                     <div>
                         <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
-                            {{ 'Rp ' . number_format($TotalDonasi, 0, ',', '.') }}</h3>
+                            {{ 'Rp ' . number_format($TotalDonasi, 0, ',', '.') }}
+                        </h3>
                         <p class="text-slate-500 dark:text-gray-400 text-sm">Total Donasi Terkumpul</p>
                     </div>
                     <div class="w-[400px] rounded-full h-2.5 bg-slate-300 dark:bg-gray-700">
-                        <div class="bg-indigo-600 h-2.5 rounded-full" style="width: {{ $persentase }}%">
-                        </div>
+                        <div class="bg-indigo-600 h-2.5 rounded-full" style="width: {{ $persentase }}%"></div>
                     </div>
                     <div>
                         <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
-                            {{ 'Rp ' . number_format($proyekPenggalangan->target_donasi, 0, ',', '.') }}</h3>
+                            {{ 'Rp ' . number_format($proyekPenggalangan->target_donasi, 0, ',', '.') }}
+                        </h3>
                         <p class="text-slate-500 dark:text-gray-400 text-sm">Target Donasi</p>
                     </div>
                 </div>
 
-
-
                 @if ($target_donasi && !$proyekPenggalangan->penarikanDana()->exists())
-                    <hr class="my-5 dark:border-gray-600">
+                    <!-- Garis dengan efek gradasi memudar -->
+                    <div class="w-5/6 mx-auto h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-5">
+                    </div>
+
                     <h3 class="text-indigo-950 dark:text-gray-200 text-2xl font-bold">Penarikan Dana</h3>
 
                     <form method="POST" action="{{ route('admin.penarikan_dana.store', $proyekPenggalangan->id) }}"
@@ -137,12 +144,28 @@
                         </div>
                     </form>
                 @else
-                    <p class="text-red-500 font-bold text-center">Pengajuan penarikan dana sudah dilakukan.
-                    </p>
+                    <!-- Ambil data penarikan dana jika ada -->
+                    @php
+                        $penarikanDana = $proyekPenggalangan->penarikanDana()->first();
+                    @endphp
+
+                    <div class="text-center">
+                        @if ($penarikanDana && ($penarikanDana->sudah_disetujui || $penarikanDana->sudah_diterima))
+                            <p class="text-gray-500 font-bold">
+                                Pengajuan penarikan dana sudah dilakukan, silahkan buka halaman laporan penggalangan
+                                untuk melihat progres lebih lanjut. Terima kasih.
+                            </p>
+                        @else
+                            <p class="text-gray-500 font-bold">
+                                Pengajuan penarikan dana hanya bisa dilakukan ketika target donasi sudah terpenuhi.
+                            </p>
+                        @endif
+                    </div>
                 @endif
 
-
-                <hr class="my-5 dark:border-gray-600">
+                <!-- Garis dengan efek gradasi memudar -->
+                <div class="w-5/6 mx-auto h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-5">
+                </div>
 
                 <div class="flex flex-row justify-between items-center">
                     <div class="flex flex-col">
@@ -165,7 +188,7 @@
 
                 @empty
                     <div class="text-center py-10">
-                        <p class="text-slate-500 dark:text-gray-400 text-lg font-semibold">Belum ada yang memberikan
+                        <p class="text-slate-500 dark:text-gray-500 font-semibold">Belum ada yang memberikan
                             donasi.</p>
                     </div>
                 @endforelse

@@ -46,8 +46,9 @@ class LaporanPenggalanganController extends Controller
     public function store(StoreLaporanPenggalanganRequest $request, $proyekPenggalanganId)
     {
         $proyekPenggalangan = ProyekPenggalangan::findOrFail($proyekPenggalanganId);
+        $penarikanDanaUpdate = null; // inisialisasi di luar closure
 
-        DB::transaction(function () use ($request, $proyekPenggalangan) {
+        DB::transaction(function () use ($request, $proyekPenggalangan, &$penarikanDanaUpdate) {
             $validated = $request->validated();
 
             if ($request->hasFile('foto')) {
@@ -57,22 +58,32 @@ class LaporanPenggalanganController extends Controller
 
             $validated['proyek_penggalangan_id'] = $proyekPenggalangan->id;
 
-            $laporanPenggalangan = LaporanPenggalangan::create($validated);
+            LaporanPenggalangan::create($validated);
 
             $penarikanDanaUpdate = PenarikanDana::where('proyek_penggalangan_id', $proyekPenggalangan->id)
                 ->latest()
                 ->first();
 
-            $penarikanDanaUpdate->update([
-                'sudah_diterima' => true
-            ]);
+            if ($penarikanDanaUpdate) {
+                $penarikanDanaUpdate->update([
+                    'sudah_diterima' => true
+                ]);
+            }
 
             $proyekPenggalangan->update([
                 'sudah_selesai' => true
             ]);
         });
-        return redirect()->route('admin.laporan_penggalangan.details');
+
+        // Periksa apakah $penarikanDanaUpdate ada
+        if ($penarikanDanaUpdate) {
+            return redirect()->route('admin.laporan_penggalangan.details', $penarikanDanaUpdate->id);
+        }
+
+        // Jika null, redirect ke rute lain atau berikan pesan
+        return redirect()->route('admin.laporan_penggalangan.index')->with('error', 'Penarikan dana tidak ditemukan.');
     }
+
 
     /**
      * Display the specified resource.

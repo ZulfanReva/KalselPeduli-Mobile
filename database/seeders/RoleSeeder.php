@@ -24,14 +24,14 @@ class RoleSeeder extends Seeder
 
         $userOwner = User::create([
             'nama' => 'Kalsel Peduli',
-            'avatar' => 'images/avatar/default-avatar.svg',
+            'avatar' => 'public/images/avatar/default-avatar.svg',
             'email' => 'kalselpeduli@kalselpeduli.com',
             'password' => bcrypt('123')
         ]);
 
         $userPemohonPenggalang = User::create([
             'nama' => 'Bekantan Borneo',
-            'avatar' => 'images/default-avatar.png',
+            'avatar' => 'public/images/avatar/default-avatar.svg',
             'email' => 'bekantanborneo@kalselpeduli.com',
             'password' => bcrypt('123')
         ]);

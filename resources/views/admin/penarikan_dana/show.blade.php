@@ -99,7 +99,7 @@
 
                 @if ($penarikanDana->sudah_disetujui)
                     <hr class="my-5 border-gray-300 dark:border-gray-600">
-                    <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold mb-5">Already Processed</h3>
+                    <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold mb-5">Bukti Transfer:</h3>
                     <img src="{{ Storage::url($penarikanDana->bukti_penarikan) }}" alt=""
                         class="rounded-2xl object-cover w-[300px] h-[200px] mb-3">
                 @else
@@ -120,7 +120,7 @@
                         <div class="flex justify-end mt-4">
                             <button type="submit"
                                 class="font-bold py-4 px-6 bg-indigo-700 text-white hover:bg-indigo-800 rounded-full transition-all">
-                                Pebaharui
+                                Perbaharui
                             </button>
                         </div>
                     </form>

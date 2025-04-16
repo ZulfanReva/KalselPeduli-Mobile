@@ -56,21 +56,24 @@
                 <a href="" class="p-[6px_12px] rounded-full bg-[#E8E9EE] font-semibold text-sm">Telusuri Semua</a>
             </div>
             <div class="main-carousel mt-[14px]">
-
                 @forelse ($proyekPenggalangan as $proyek)
                     <div class="px-2 first-of-type:pl-4 last-of-type:pr-4 mb-6">
                         <div class="flex flex-col gap-[14px] rounded-2xl border border-[#E8E9EE] p-[14px] w-[208px]">
-                            <a href="{{ route ('frontend.detail', $proyek) }}">
+                            <a href="{{ route('frontend.detail', $proyek) }}">
                                 <div class="rounded-2xl w-full h-[120px] flex shrink-0 overflow-hidden">
                                     <img src="{{ Storage::url($proyek->foto) }}" class="w-full h-full object-cover"
                                         alt="thumbnail">
                                 </div>
                             </a>
                             <div class="flex flex-col gap-[6px]">
-                                <a href="{{ route ('frontend.detail', $proyek) }}"
-                                    class="font-bold line-clamp-2 hover:line-clamp-none">{{ $proyek->nama }}</a>
-                                <p class="text-xs leading-[18px]">Target Donasi<span
-                                        class="font-bold text-[#FF7815]">{{ 'Rp ' . number_format($proyek->target_donasi, 0, ',', '.') }}</span>
+                                <a href="{{ route('frontend.detail', $proyek) }}"
+                                    class="font-bold line-clamp-2 hover:line-clamp-none block">{{ $proyek->nama }}</a>
+
+                                <p class="text-xs leading-[18px] block">
+                                    Target Donasi <br>
+                                    <span class="font-bold text-[#FF7815] block">
+                                        {{ 'Rp ' . number_format($proyek->target_donasi, 0, ',', '.') }}
+                                    </span>
                                 </p>
                             </div>
                             <progress id="fund" value="{{ $proyek->AtributPersentase() }}" max="100"
@@ -79,21 +82,23 @@
                     </div>
                 @empty
                     <div class="text-center py-10">
-                        <p class="text-white text-lg font-semibold">Belum ada penggalangan dana saat ini.
-                        </p>
+                        <p class="text-slate-500 dark:text-gray-400 text-lg font-semibold">Belum ada penggalangan dana saat
+                            ini.</p>
                     </div>
                 @endforelse
             </div>
         </div>
+
+
         <div id="latest-fundrising" class="mt-8">
             <div class="px-4 flex justify-between items-center">
                 <h2 class="font-bold text-lg">Penggalangan <br>Terbaru</h2>
                 <a href="" class="p-[6px_12px] rounded-full bg-[#E8E9EE] font-semibold text-sm">Telusuri Semua</a>
             </div>
-            <div class="flex flex-col gap-4 mt-[14px] px-4">
 
+            <div class="flex flex-col gap-4 mt-[14px] px-4">
                 @forelse ($proyekPenggalangan as $proyek)
-                    <a href="{{ route ('frontend.detail', $proyek) }}" class="card">
+                    <a href="{{ route('frontend.detail', $proyek) }}" class="card">
                         <div class="w-full border border-[#E8E9EE] flex items-center p-[14px] gap-3 rounded-2xl bg-white">
                             <div class="w-20 h-[90px] flex shrink-0 rounded-2xl overflow-hidden">
                                 <img src="{{ Storage::url($proyek->foto) }}" class="w-full h-full object-cover"

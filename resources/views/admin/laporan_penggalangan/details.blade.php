@@ -21,7 +21,7 @@
                             d="M22 6.73V13.72C22 16.42 21.37 17.29 19 17.43V10.28C19 7.3 18.24 6.55 15.22 6.55H5.78003C5.50003 6.55 5.24 6.56 5 6.57C5.03 3.72 5.81003 3 8.78003 3H18.22C21.24 3 22 3.75 22 6.73Z"
                             fill="#292D32" />
                     </svg>
-                    <div class="flex flex-col gap-y-10">
+                    <div class="flex flex-col gap-y-5">
                         <div>
                             <p class="text-slate-500 dark:text-gray-400 text-sm">Total Donasi Diminta</p>
                             <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">Rp
@@ -49,22 +49,23 @@
 
                     <div>
                         <img src="{{ Storage::url($penarikanDana->proyekPenggalangan->foto) }}" alt="Fundraiser Image"
-                            class="rounded-2xl object-cover w-[200px] h-[150px]">
+                            class="rounded-2xl object-cover w-[200px] h-[150px] content-center">
                         <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
                             {{ $penarikanDana->proyekPenggalangan->nama }}</h3>
-                        <p class="text-slate-500 dark:text-gray-400 text-sm">
+                        {{-- <p class="text-slate-500 dark:text-gray-400 text-sm">
                             {{ $penarikanDana->proyekPenggalangan->deskripsi }}</p>
                         <div>
                             <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
                                 {{ \Carbon\Carbon::parse($penarikanDana->created_at)->setTimezone('Asia/Jakarta')->format('d M Y - H:i:s') }}
                             </h3>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
                 @if ($penarikanDana->sudah_disetujui)
-                    <hr class="my-5 border-gray-300 dark:border-gray-600">
-                    <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold mb-5">Dikirim ke:</h3>
+                    <div class="w-5/6 mx-auto h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-5">
+                    </div>
+                    <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold mb-1">Dikirim ke:</h3>
                     <div class="flex flex-row gap-x-10">
                         <div>
                             <p class="text-slate-500 dark:text-gray-400 text-sm">Nama Bank</p>
@@ -75,22 +76,28 @@
                         <div>
                             <p class="text-slate-500 dark:text-gray-400 text-sm">Nama Akun Rekening</p>
                             <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
-                                {{ $penarikanDana->nama_rekening }}</h3>
+                                {{ $penarikanDana->nama_rekening }}
+                            </h3>
                         </div>
                         <div>
                             <p class="text-slate-500 dark:text-gray-400 text-sm">Nomor Rekening</p>
                             <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
-                                {{ $penarikanDana->nomor_rekening }}</h3>
+                                {{ $penarikanDana->nomor_rekening }}
+                            </h3>
                         </div>
                     </div>
-                    <hr class="my-5 border-gray-300 dark:border-gray-600">
+                    <div class="w-5/6 mx-auto h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-5">
+                    </div>
+
                     <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold mb-5">Uang sudah ditransfer oleh
                         Admin</h3>
                     <img src="{{ Storage::url($penarikanDana->bukti_penarikan) }}" alt=""
                         class="rounded-2xl object-cover w-[300px] h-[200px] mb-3">
 
                     @if (!$penarikanDana->sudah_diterima)
-                        <hr class="my-5 border-gray-300 dark:border-gray-600">
+                        <div
+                            class="w-5/6 mx-auto h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent my-5">
+                        </div>
                         <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">Apakah kamu sudah menerima
                             uang?</h3>
                         <form

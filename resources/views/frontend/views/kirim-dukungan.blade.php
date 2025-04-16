@@ -6,7 +6,7 @@
         <div class="header flex flex-col overflow-hidden h-[220px] relative">
             <nav class="pt-5 px-3 flex justify-between items-center relative z-20">
                 <div class="flex items-center gap-[10px]">
-                    <a href="index.html" class="w-10 h-10 flex shrink-0">
+                    <a href="{{ route('frontend.index') }}" class="w-10 h-10 flex shrink-0">
                         <img src="{{ asset('assets/images/icons/back.svg') }}" alt="icon">
                     </a>
                 </div>
@@ -19,7 +19,7 @@
             </nav>
             <div class="flex items-center px-4 my-auto gap-[14px]">
                 <div class="w-[90px] h-[100px] flex shrink-0 rounded-2xl overflow-hidden relative">
-                    <img src="{{ asset('assets/images/thumbnails/th4.png') }}" class="w-full h-full object-cover"
+                    <img src="{{ Storage::url($proyek->foto) }}" class="w-full h-full object-cover"
                         alt="thumbnail">
                     <p
                         class="w-[90px] h-[23px] bg-[#4541FF] text-center p-[4px_12px] absolute bottom-0 font-bold text-[10px] leading-[15px] text-white">

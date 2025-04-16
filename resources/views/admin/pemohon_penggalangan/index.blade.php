@@ -19,18 +19,23 @@
                         </div>
                     @else
                         @foreach ($pemohonPenggalangans as $pemohon)
-                            <div class="kartu-item flex flex-row justify-between items-center">
-                                <div class="flex flex-row items-center gap-x-3">
-                                    <img src="{{ Storage::url($pemohon->user->avatar) }}" alt="Foto Pemohon"
-                                        class="rounded-2xl object-cover w-[90px] h-[90px]">
-                                    <div class="flex flex-col">
+                            <div
+                                class="kartu-item flex flex-col md:flex-row justify-between items-center gap-y-5 md:gap-y-0 pb-4">
+                                {{-- Gambar dan Nama --}}
+                                <div class="flex flex-row items-center gap-x-4 w-full md:w-1/3">
+                                    <div class="w-[90px] h-[90px] rounded-2xl overflow-hidden">
+                                        <img src="{{ Storage::url($pemohon->user->avatar) }}" alt="Foto Pemohon"
+                                            class="w-full h-full object-cover rounded-2xl">
+                                    </div>
+                                    <div>
                                         <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
                                             {{ $pemohon->user->nama }}
                                         </h3>
                                     </div>
                                 </div>
 
-                                <div class="hidden md:flex flex-col">
+                                {{-- Tanggal Pengajuan --}}
+                                <div class="hidden md:flex flex-col w-1/4">
                                     <p class="text-slate-500 dark:text-gray-400 text-sm">Tanggal Pengajuan</p>
                                     <h3 class="text-indigo-950 dark:text-gray-200 text-xl font-bold">
                                         {{ \Carbon\Carbon::parse($pemohon->created_at)->setTimezone('Asia/Jakarta')->format('d M Y') }}
@@ -38,42 +43,45 @@
                                 </div>
 
                                 {{-- Status --}}
-                                <div class="flex flex-col items-center">
+                                <div class="flex flex-col items-center w-full md:w-[10%]">
                                     <span
-                                        class="w-fit text-sm font-bold py-2 px-3 rounded-full text-white 
+                                        class="w-fit text-sm font-bold py-2 px-3 rounded-full text-white
                                     {{ $pemohon->status_aktif ? 'bg-green-500' : 'bg-orange-500' }}">
                                         {{ $pemohon->status_aktif ? 'Aktif' : 'Menunggu' }}
                                     </span>
                                 </div>
 
                                 {{-- Aksi --}}
-                                <div class="flex flex-col items-center">
+                                <div class="flex flex-col items-center w-full md:w-auto">
                                     @if ($pemohon->status_aktif)
-                                        <div class="hidden md:flex flex-row items-center gap-x-3">
-                                            <form action="#" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="font-bold py-4 px-6 bg-red-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
-                                                    Hapus
-                                                </button>
-                                            </form>
-                                        </div>
+                                        <form action="#" method="POST" class="hidden md:flex">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="font-bold py-2 px-6 bg-red-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
+                                                Hapus
+                                            </button>
+                                        </form>
                                     @else
-                                        <div class="hidden md:flex flex-row items-center gap-x-3">
-                                            <form action="{{ route('admin.pemohon_penggalangan.update', $pemohon) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit"
-                                                    class="font-bold py-4 px-6 bg-indigo-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
-                                                    Terima
-                                                </button>
-                                            </form>
-                                        </div>
+                                        <form action="{{ route('admin.pemohon_penggalangan.update', $pemohon) }}"
+                                            method="POST" class="hidden md:flex">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit"
+                                                class="font-bold py-2 px-6 bg-indigo-700 text-white rounded-full transition-transform duration-200 ease-out hover:scale-105">
+                                                Terima
+                                            </button>
+                                        </form>
                                     @endif
                                 </div>
                             </div>
+
+                            <!-- Garis dengan efek gradasi memudar -->
+                            @if (!$loop->last)
+                                <div
+                                    class="w-5/6 mx-auto h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent">
+                                </div>
+                            @endif
                         @endforeach
                     @endif
                 </div>

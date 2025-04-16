@@ -8,21 +8,36 @@ use Illuminate\Http\Request;
 use App\Models\ProyekPenggalangan;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreDonaturRequest;
-use App\Http\Requests\StorePenarikanDanaRequest;
 
 class FrontController extends Controller
 {
     public function index()
     {
         $kategori = Kategori::all();
-        $proyekPenggalangan = ProyekPenggalangan::with('kategori', 'pemohonPenggalangan')->where('status_aktif', 1)->orderByDesc('id')->get();
+        // Tambahkan take() atau limit() untuk memastikan lebih dari satu data yang diambil
+        $proyekPenggalangan = ProyekPenggalangan::with('kategori', 'pemohonPenggalangan')
+            ->where('status_aktif', 1)
+            ->orderByDesc('id')
+            ->get();
+
+        // Debug untuk melihat berapa banyak data yang diambil
+        // dd($proyekPenggalangan->count());
 
         return view('frontend.views.index', compact('kategori', 'proyekPenggalangan'));
     }
 
     public function kategori(Kategori $kategori)
     {
-        return view('frontend.views.kategori', compact('kategori'));
+        // Mengambil proyek penggalangan dari kategori tertentu yang aktif saja
+        $proyekPenggalanganAktif = $kategori->proyekPenggalangan()
+            ->where('status_aktif', 1)
+            ->get();
+
+        // Membuat instance Kategori baru dengan proyek yang difilter
+        $kategoriDenganProyekAktif = $kategori->replicate();
+        $kategoriDenganProyekAktif->setRelation('proyekPenggalangan', $proyekPenggalanganAktif);
+
+        return view('frontend.views.kategori', ['kategori' => $kategoriDenganProyekAktif]);
     }
 
     public function detail(ProyekPenggalangan $proyekPenggalangan)
