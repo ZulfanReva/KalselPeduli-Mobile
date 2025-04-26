@@ -19,17 +19,20 @@ class StoreDonaturRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'nama' => ['required', 'string', 'max:255'], // Wajib diisi, string, max 255 karakter
-            'nomor_whatsapp' => ['required', 'string', 'digits_between:9,13'], // Harus angka, panjang 9-13 digit
-            'bukti_pembayaran' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:10240'], // Opsional, hanya PNG/JPG max 10MB
-            'catatan' => ['required', 'string', 'max:1000'], // Opsional, max 500 karakter
+            'nama' => ['required', 'string', 'max:255'],
+            'nomor_whatsapp' => ['required', 'string', 'digits_between:9,13'],
+            'bukti_pembayaran' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:10240'],
+            'catatan' => ['required', 'string', 'max:1000'],
         ];
     }
 
-    public function messages()
+    /**
+     * Get custom error messages for validation.
+     */
+    public function messages(): array
     {
         return [
             'nomor_whatsapp.digits_between' => 'Nomor WhatsApp harus terdiri dari 9 hingga 13 digit.',

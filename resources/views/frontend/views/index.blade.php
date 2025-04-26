@@ -11,8 +11,8 @@
                         <img src="{{ asset('assets/images/icons/loc.svg') }}" alt="icon">
                     </div>
                     <div class="flex flex-col text-white">
-                        <p class="text-xs leading-[18px]">Location</p>
-                        <p class="font-semibold text-sm">Bali, Indonesia</p>
+                        <p class="text-xs leading-[18px]">Lokasi</p>
+                        <p class="font-semibold text-sm">Indonesia</p>
                     </div>
                 </div>
                 <a href="" class="w-10 h-10 flex shrink-0">
@@ -20,8 +20,9 @@
                 </a>
             </nav>
             <div class="mt-[30px] z-10">
-                <h1 class="font-extrabold text-2xl leading-[36px] text-white text-center">Help Other People.<br>Life
-                    Becomes Happier.</h1>
+                <h1 class="font-extrabold text-2xl leading-[36px] text-white text-center">
+                    Bantu Sesama<br>Hidup Lebih Bermakna!
+                </h1>
             </div>
             <div class="w-full h-fit overflow-hidden -mt-[33px]">
                 <img src="{{ asset('assets/images/backgrounds/hero-background.png') }}" class="w-full h-full object-contain"

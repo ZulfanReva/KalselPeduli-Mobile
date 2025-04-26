@@ -82,6 +82,19 @@
                     <progress id="fund" value="{{ $proyek->AtributPersentase() }}" max="100"
                         class="w-full h-[6px] rounded-full overflow-hidden"></progress>
                 </div>
+
+                @forelse ($proyek->laporanPenggalangan as $laporanPenggalangan)
+                    <div class="flex flex-col gap-[10px] p-5 rounded-[20px] bg-[#F6ECE2]">
+                        <h2 class="font-semibold text-sm">{{ $laporanPenggalangan->nama }}</h2>
+                        <div class="aspect-[61/30] rounded-2xl bg-[#D9D9D9] overflow-hidden">
+                            <img src="{{  Storage::url ($laporanPenggalangan->foto) }}" class="w-full h-full object-cover"
+                                alt="thumbnail">
+                        </div>
+                        <p class="text-sm leading-[26px]">{{ $laporanPenggalangan->catatan }}</p>
+                    </div>
+                @empty
+                @endforelse
+
                 <div class="flex flex-col gap-[2px]">
                     <h2 class="font-semibold text-sm">Deskripsi</h2>
                     <p class="desc-less text-sm leading-[26px]">{{ $proyek->deskripsi }}</p>
@@ -127,7 +140,7 @@
         </div>
 
         @if (!$target_tercapai)
-            <a href="{{ route ('frontend.kirim-dukungan', $proyek->slug) }}"
+            <a href="{{ route('frontend.kirim-dukungan', $proyek->slug) }}"
                 class="p-[14px_20px] bg-[#76AE43] rounded-full text-white w-fit mx-auto font-semibold hover:shadow-[0_12px_20px_0_#76AE4380] transition-all duration-300 fixed bottom-[30px] transform -translate-x-1/2 left-1/2 z-40 text-nowrap">Mulai
                 Berdonasi</a>
         @endif
