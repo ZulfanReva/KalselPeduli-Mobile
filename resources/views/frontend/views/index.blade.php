@@ -33,11 +33,11 @@
         <div id="popular-fundrising" class="mt-8">
             <div class="px-4 flex justify-between items-center">
                 <h2 class="font-bold text-lg">Penggalangan <br>Populer</h2>
-                <a href="" class="p-[6px_12px] rounded-full bg-[#E8E9EE] font-semibold text-sm">Explore All</a>
+                <a href="" class="p-[6px_12px] rounded-full bg-[#E8E9EE] font-semibold text-sm">Telurusi Semua</a>
             </div>
             <div class="main-carousel mt-[14px]">
 
-                @foreach ($kategori as $kategori)
+                @forelse ($kategori as $kategori)
                     <div class="px-2 first-of-type:pl-4 last-of-type:pr-4">
                         <a href="{{ route('frontend.kategori', $kategori) }}"
                             class="fundrising-card rounded-[30px] w-[135px] min-h-[160px] flex flex-col items-center gap-3 p-5 border border-[#E8E9EE]">
@@ -47,7 +47,12 @@
                             <span class="font-semibold text-center my-auto">{{ $kategori->nama }}</span>
                         </a>
                     </div>
-                @endforeach
+                @empty
+                    <div class="text-center py-10 w-full">
+                        <p class="text-slate-500 dark:text-gray-400 text-lg font-semibold">Belum ada penggalangan dana saat
+                            ini.</p>
+                    </div>
+                @endforelse
             </div>
         </div>
 
@@ -82,7 +87,7 @@
                         </div>
                     </div>
                 @empty
-                    <div class="text-center py-10">
+                    <div class="text-center py-10 w-full">
                         <p class="text-slate-500 dark:text-gray-400 text-lg font-semibold">Belum ada penggalangan dana saat
                             ini.</p>
                     </div>

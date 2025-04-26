@@ -22,21 +22,28 @@ class RoleSeeder extends Seeder
             'name' => 'pemohon_penggalangan'
         ]);
 
+        // $userOwner = User::create([
+        //     'nama' => 'Kalsel Peduli',
+        //     'avatar' => asset('assets/images/photos/avatar-default.svg'),
+        //     'email' => 'kalselpeduli@kalselpeduli.com',
+        //     'password' => bcrypt('123')
+        // ]);
+
         $userOwner = User::create([
             'nama' => 'Kalsel Peduli',
-            'avatar' => 'public/images/avatar/default-avatar.svg',
+            'avatar' => 'images/avatar-admin/avatar-default.svg', // Path relatif ke storage/app/public/
             'email' => 'kalselpeduli@kalselpeduli.com',
             'password' => bcrypt('123')
         ]);
 
-        $userPemohonPenggalang = User::create([
-            'nama' => 'Bekantan Borneo',
-            'avatar' => 'public/images/avatar/default-avatar.svg',
-            'email' => 'bekantanborneo@kalselpeduli.com',
-            'password' => bcrypt('123')
-        ]);
+        // $userPemohonPenggalang = User::create([
+        //     'nama' => 'Bekantan Borneo',
+        //     'avatar' => 'public/images/avatar/default-avatar.svg',
+        //     'email' => 'bekantanborneo@kalselpeduli.com',
+        //     'password' => bcrypt('123')
+        // ]);
 
         $userOwner->assignRole($ownerRole);
-        $userPemohonPenggalang->assignRole($PemohonPenggalanganRole);
+        // $userPemohonPenggalang->assignRole($PemohonPenggalanganRole);
     }
 }
