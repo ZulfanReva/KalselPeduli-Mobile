@@ -11,42 +11,40 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        Dashboard
                     </x-nav-link>
 
                     @role('owner')
                         <x-nav-link :href="route('admin.kategori.index')" :active="request()->routeIs('admin.kategori.index')">
-                            {{ __('Kategori') }}
+                            Kategori
                         </x-nav-link>
 
                         <x-nav-link :href="route('admin.donatur.index')" :active="request()->routeIs('admin.donatur.index')">
-                            {{ __('Donatur') }}
+                            Donatur
                         </x-nav-link>
                     @endrole
 
-
                     <x-nav-link :href="route('admin.pemohon_penggalangan.index')" :active="request()->routeIs('admin.pemohon_penggalangan.index')">
-                        {{ __('Pemohon Penggalangan') }}
+                        Pemohon Penggalangan
                     </x-nav-link>
 
                     @role('owner|pemohon_penggalangan')
                         <x-nav-link :href="route('admin.proyek_penggalangan.index')" :active="request()->routeIs('admin.proyek_penggalangan.index')">
-                            {{ __('Proyek Penggalangan') }}
+                            Proyek Penggalangan
                         </x-nav-link>
                     @endrole
 
                     @role('owner')
                         <x-nav-link :href="route('admin.penarikan_dana.index')" :active="request()->routeIs('admin.penarikan_dana.index')">
-                            {{ __('Penarikan Dana') }}
+                            Penarikan Dana
                         </x-nav-link>
                     @endrole
 
                     @role('pemohon_penggalangan')
                         <x-nav-link :href="route('admin.laporan_penggalangan.index')" :active="request()->routeIs('admin.laporan_penggalangan.index')">
-                            {{ __('Laporan Penggalangan') }}
+                            Laporan Penggalangan
                         </x-nav-link>
                     @endrole
                 </div>
@@ -85,7 +83,7 @@
                         <!-- Profile -->
                         <x-dropdown-link :href="route('profile.edit')" class="flex items-center">
                             <i class="bi bi-person-circle"></i>
-                            <span class="ml-2">{{ __('Profile') }}</span>
+                            <span class="ml-2">Profile</span>
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -94,7 +92,7 @@
                             <x-dropdown-link :href="route('logout')" class="flex items-center"
                                 onclick="event.preventDefault(); this.closest('form').submit();">
                                 <i class="bi bi-box-arrow-right"></i>
-                                <span class="ml-2">{{ __('Log Out') }}</span>
+                                <span class="ml-2">Log Out</span>
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -105,15 +103,14 @@
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = !open"
                     class="inline-flex items-center justify-center p-3 rounded-md text-gray-400 dark:text-gray-500 
-    hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 
-    focus:outline-none transition duration-200 ease-in-out">
-                    <svg class="h-8 w-8 transition-transform duration-300" stroke="currentColor" fill="none"
-                        viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+           hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 
+           focus:outline-none transition duration-200 ease-in-out"
+                    aria-label="Toggle navigation menu" :aria-expanded="open">
+                    <svg class="h-8 w-8" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path x-show="!open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" class="transition-opacity duration-300" />
+                        <path x-show="open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" class="transition-opacity duration-300" />
                     </svg>
                 </button>
             </div>
