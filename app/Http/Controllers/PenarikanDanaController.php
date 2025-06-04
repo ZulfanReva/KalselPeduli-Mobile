@@ -80,6 +80,8 @@ class PenarikanDanaController extends Controller
      */
     public function update(UpdatePenarikanDanaRequest $request, PenarikanDana $penarikanDana)
     {
+        /** @var \Illuminate\Http\Request $request */
+        
         //
         DB::transaction(function () use ($request, $penarikanDana) {
             $validated = $request->validated();

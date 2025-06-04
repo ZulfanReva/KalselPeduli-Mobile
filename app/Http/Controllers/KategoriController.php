@@ -34,6 +34,8 @@ class KategoriController extends Controller
      */
     public function store(StoreKategoriRequest $request)
     {
+        /** @var \Illuminate\Http\Request $request */
+
         DB::transaction(function () use ($request) {
             $validated = $request->validated();
 
@@ -74,6 +76,8 @@ class KategoriController extends Controller
      */
     public function update(UpdateKategoriRequest $request, Kategori $kategori)
     {
+        /** @var \Illuminate\Http\Request $request */
+
         DB::transaction(function () use ($request, $kategori) {
             $validated = $request->validated();
 

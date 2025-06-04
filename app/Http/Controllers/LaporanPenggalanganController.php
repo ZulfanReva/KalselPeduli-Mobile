@@ -45,6 +45,8 @@ class LaporanPenggalanganController extends Controller
      */
     public function store(StoreLaporanPenggalanganRequest $request, $proyekPenggalanganId)
     {
+        /** @var \Illuminate\Http\Request $request */
+
         $proyekPenggalangan = ProyekPenggalangan::findOrFail($proyekPenggalanganId);
         $penarikanDanaUpdate = null; // inisialisasi di luar closure
 

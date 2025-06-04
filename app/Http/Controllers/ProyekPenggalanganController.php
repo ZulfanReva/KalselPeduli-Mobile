@@ -61,6 +61,8 @@ class ProyekPenggalanganController extends Controller
      */
     public function store(StoreProyekPenggalanganRequest $request)
     {
+        /** @var \Illuminate\Http\Request $request */
+
         $pemohonPenggalangan = PemohonPenggalangan::where('user_id', Auth::user()->id)->first();
 
         DB::transaction(function () use ($request, $pemohonPenggalangan) {
@@ -136,6 +138,8 @@ class ProyekPenggalanganController extends Controller
      */
     public function update(UpdateProyekPenggalanganRequest $request, ProyekPenggalangan $proyekPenggalangan)
     {
+        /** @var \Illuminate\Http\Request $request */
+
         DB::transaction(function () use ($request, $proyekPenggalangan) {
             $validated = $request->validated();
 

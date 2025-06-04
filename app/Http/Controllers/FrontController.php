@@ -61,6 +61,8 @@ class FrontController extends Controller
 
     public function store(StoreDonaturRequest $request, ProyekPenggalangan $proyekPenggalangan, $jumlah_donasi)
     {
+        /** @var \Illuminate\Http\Request $request */
+
         DB::transaction(function () use ($request, $proyekPenggalangan, $jumlah_donasi) {
             $validated = $request->validated();
 

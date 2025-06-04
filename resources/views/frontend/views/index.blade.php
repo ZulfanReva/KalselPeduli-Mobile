@@ -11,7 +11,7 @@
                         <img src="{{ asset('assets/images/icons/loc.svg') }}" alt="icon">
                     </div>
                     <div class="flex flex-col text-white">
-                        <p class="text-xs leading-[18px]">Lokasi</p>
+                        <p class="text- leading-[18px]">Lokasi</p>
                         <p class="font-semibold text-sm">Indonesia</p>
                     </div>
                 </div>
